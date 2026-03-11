@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Docs — Nepali Datepicker</title>
+  <meta name="description" content="Complete API reference for Nepali Datepicker — NepaliDate class, CalendarEngine, RangePicker, adapters, converter, and locale utilities.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="main">
+
+    <section style="padding-top: 40px;">
+      <div class="container">
+        <div class="section-header fade-in" style="margin-bottom: 40px;">
+          <span class="section-label">Reference</span>
+          <h1 class="section-title">API Documentation</h1>
+          <p class="section-desc">Complete API reference for every class, method, and utility.</p>
+        </div>
+
+        <div class="docs-layout">
+          <!-- ═══ Sidebar ═══ -->
+          <aside class="docs-sidebar fade-in">
+            <ul class="docs-sidebar__list">
+              <li><a href="#nepalidate" class="docs-sidebar__link active">NepaliDate</a></li>
+              <li><a href="#calendar-engine" class="docs-sidebar__link">CalendarEngine</a></li>
+              <li><a href="#range-picker" class="docs-sidebar__link">RangePicker</a></li>
+              <li><a href="#vanilla-adapter" class="docs-sidebar__link">Vanilla Adapter</a></li>
+              <li><a href="#react-adapter" class="docs-sidebar__link">React Adapter</a></li>
+              <li><a href="#vue-adapter" class="docs-sidebar__link">Vue 3 Adapter</a></li>
+              <li><a href="#svelte-adapter" class="docs-sidebar__link">Svelte Adapter</a></li>
+              <li><a href="#locale" class="docs-sidebar__link">Locale &amp; Formatting</a></li>
+              <li><a href="#converter" class="docs-sidebar__link">Converter</a></li>
+              <li><a href="#styling" class="docs-sidebar__link">Styling</a></li>
+            </ul>
+          </aside>
+
+          <!-- ═══ Content ═══ -->
+          <div class="docs-content">
+
+            <!-- ── NepaliDate ── -->
+            <div class="docs-section fade-in" id="nepalidate">
+              <h2 class="docs-section__title">NepaliDate</h2>
+              <p class="docs-section__desc">
+                The core date manipulation object — immutable, chainable, inspired by Moment.js.
+                All arithmetic methods return a new instance.
+              </p>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Construction</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">new NepaliDate(bsYear, bsMonth, bsDay)</div>
+                <div class="docs-method__desc">Create a NepaliDate from BS year, month (1-indexed), and day. The instance is frozen (immutable).</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">NepaliDate.fromAD(jsDate)</div>
+                <div class="docs-method__desc">Create a NepaliDate from a native JavaScript <code>Date</code> object.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">NepaliDate.parse(str, formatStr = 'YYYY-MM-DD', locale = 'en')</div>
+                <div class="docs-method__desc">Parse a formatted BS date string. Supports both English and Nepali numerals.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">NepaliDate.today()</div>
+                <div class="docs-method__desc">Returns today's date in Bikram Sambat.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">NepaliDate.fromTimestamp(ms)</div>
+                <div class="docs-method__desc">Create a NepaliDate from a Unix timestamp in milliseconds.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Getters</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>.year</code></td><td><code>number</code></td><td>BS year</td></tr>
+                  <tr><td><code>.month</code></td><td><code>number</code></td><td>BS month (1-indexed, 1 = Baisakh)</td></tr>
+                  <tr><td><code>.day</code></td><td><code>number</code></td><td>BS day of month</td></tr>
+                  <tr><td><code>.weekDay</code></td><td><code>number</code></td><td>Day of week (0 = Sunday, 6 = Saturday)</td></tr>
+                  <tr><td><code>.quarter</code></td><td><code>number</code></td><td>Quarter (1–4)</td></tr>
+                  <tr><td><code>.dayOfYear</code></td><td><code>number</code></td><td>Day number within the BS year</td></tr>
+                  <tr><td><code>.weekOfYear</code></td><td><code>number</code></td><td>Week number within the BS year</td></tr>
+                  <tr><td><code>.daysInMonth</code></td><td><code>number</code></td><td>Total days in the current month</td></tr>
+                  <tr><td><code>.daysInYear</code></td><td><code>number</code></td><td>Total days in the current year</td></tr>
+                  <tr><td><code>.isLeapYear</code></td><td><code>boolean</code></td><td>True if the BS year has 366 days</td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Conversion</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.toAD()</div>
+                <div class="docs-method__desc">Convert to a native JavaScript Date object in Gregorian calendar.</div>
+                <div class="docs-method__returns">Returns <code>Date</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.toObject()</div>
+                <div class="docs-method__desc">Returns a plain object with <code>year</code>, <code>month</code>, <code>day</code>, and <code>weekDay</code> properties.</div>
+                <div class="docs-method__returns">Returns <code>{ year, month, day, weekDay }</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.toTimestamp()</div>
+                <div class="docs-method__desc">Returns the equivalent Unix timestamp in milliseconds.</div>
+                <div class="docs-method__returns">Returns <code>number</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.format(formatStr = 'YYYY-MM-DD', locale = 'en')</div>
+                <div class="docs-method__desc">Format the date as a string. Tokens: <code>YYYY</code>, <code>MM</code>, <code>DD</code>, <code>MMMM</code>, <code>MMM</code>, <code>dddd</code>, <code>ddd</code>.</div>
+                <div class="docs-method__returns">Returns <code>string</code></div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Arithmetic</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.add(value, unit) / .subtract(value, unit)</div>
+                <div class="docs-method__desc">Add or subtract time. Units: <code>'day'</code>, <code>'week'</code>, <code>'month'</code>, <code>'year'</code>. Returns a new instance.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.startOf(unit) / .endOf(unit)</div>
+                <div class="docs-method__desc">Get the first or last moment of the given unit. Units: <code>'month'</code>, <code>'year'</code>, <code>'week'</code>.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.addDays(n) / .addMonths(n) / .addYears(n)</div>
+                <div class="docs-method__desc">Shorthand helpers for <code>.add(n, unit)</code>.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.subtractDays(n) / .subtractMonths(n) / .subtractYears(n)</div>
+                <div class="docs-method__desc">Shorthand helpers for <code>.subtract(n, unit)</code>.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Comparison</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.isBefore(other) / .isAfter(other)</div>
+                <div class="docs-method__desc">Compare two NepaliDate instances chronologically.</div>
+                <div class="docs-method__returns">Returns <code>boolean</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.isSame(other, granularity = 'day')</div>
+                <div class="docs-method__desc">Check equality at a given granularity: <code>'day'</code>, <code>'month'</code>, or <code>'year'</code>.</div>
+                <div class="docs-method__returns">Returns <code>boolean</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.isBetween(start, end, inclusive = '[]')</div>
+                <div class="docs-method__desc">Check if the date falls within a range. Inclusive modes: <code>'[]'</code>, <code>'()'</code>, <code>'[)'</code>, <code>'(]'</code>.</div>
+                <div class="docs-method__returns">Returns <code>boolean</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.isToday() / .isWeekend() / .isValid()</div>
+                <div class="docs-method__desc">Convenience boolean checks. <code>isWeekend()</code> returns true for Saturday (weekDay === 6).</div>
+                <div class="docs-method__returns">Returns <code>boolean</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.diff(other, unit = 'day')</div>
+                <div class="docs-method__desc">Calculate the signed difference between two dates. Units: <code>'day'</code>, <code>'week'</code>, <code>'month'</code>, <code>'year'</code>.</div>
+                <div class="docs-method__returns">Returns <code>number</code></div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Cloning &amp; Mutation</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.clone()</div>
+                <div class="docs-method__desc">Create an identical copy of this NepaliDate.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.set(field, value)</div>
+                <div class="docs-method__desc">Return a new NepaliDate with the given field changed. Fields: <code>'year'</code>, <code>'month'</code>, <code>'day'</code>. Day is clamped to valid range.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+            </div>
+
+            <!-- ── CalendarEngine ── -->
+            <div class="docs-section fade-in" id="calendar-engine">
+              <h2 class="docs-section__title">CalendarEngine</h2>
+              <p class="docs-section__desc">
+                A headless calendar state machine. Holds view state, selection, and disabled-date logic.
+                Zero DOM or framework knowledge — adapters consume its state snapshots.
+              </p>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Constructor Options</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Option</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>value</code></td><td><code>NepaliDate</code></td><td>Currently selected date</td></tr>
+                  <tr><td><code>defaultDate</code></td><td><code>NepaliDate</code></td><td>Date to show on first render</td></tr>
+                  <tr><td><code>minDate</code></td><td><code>NepaliDate</code></td><td>Earliest selectable date</td></tr>
+                  <tr><td><code>maxDate</code></td><td><code>NepaliDate</code></td><td>Latest selectable date</td></tr>
+                  <tr><td><code>locale</code></td><td><code>'en' | 'np'</code></td><td>Display locale (default: <code>'en'</code>)</td></tr>
+                  <tr><td><code>weekStartsOn</code></td><td><code>number</code></td><td>First day of week (0 = Sun, default: 0)</td></tr>
+                  <tr><td><code>disabledDays</code></td><td><code>string[]</code></td><td>Weekday names to disable, e.g. <code>['Sat']</code></td></tr>
+                  <tr><td><code>disabledDates</code></td><td><code>NepaliDate[]</code></td><td>Specific dates to disable</td></tr>
+                  <tr><td><code>onChange</code></td><td><code>Function</code></td><td>Called with <code>NepaliDate</code> on selection</td></tr>
+                  <tr><td><code>onMonthChange</code></td><td><code>Function</code></td><td>Called with <code>{ year, month }</code> on navigation</td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">getState()</h3>
+
+              <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Returns a complete, serializable snapshot of the current UI state.</p>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>viewYear</code></td><td><code>number</code></td><td>Currently displayed BS year</td></tr>
+                  <tr><td><code>viewMonth</code></td><td><code>number</code></td><td>Currently displayed BS month (1-indexed)</td></tr>
+                  <tr><td><code>viewMode</code></td><td><code>'day' | 'month' | 'year'</code></td><td>Current view mode</td></tr>
+                  <tr><td><code>weeks</code></td><td><code>DayCell[][]</code></td><td>6 rows × 7 cols of day cells</td></tr>
+                  <tr><td><code>months</code></td><td><code>MonthCell[]</code></td><td>12 month items for month picker</td></tr>
+                  <tr><td><code>years</code></td><td><code>YearCell[]</code></td><td>~12 items in current decade window</td></tr>
+                  <tr><td><code>selectedDate</code></td><td><code>NepaliDate | null</code></td><td>Currently selected date</td></tr>
+                  <tr><td><code>todayDate</code></td><td><code>NepaliDate</code></td><td>Today's BS date</td></tr>
+                  <tr><td><code>locale</code></td><td><code>'en' | 'np'</code></td><td>Current locale</td></tr>
+                  <tr><td><code>canGoBack</code></td><td><code>boolean</code></td><td>Can navigate to previous month</td></tr>
+                  <tr><td><code>canGoForward</code></td><td><code>boolean</code></td><td>Can navigate to next month</td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">DayCell Shape</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Property</th><th>Type</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>date</code></td><td><code>NepaliDate</code></td></tr>
+                  <tr><td><code>label</code></td><td><code>string</code> — formatted day number</td></tr>
+                  <tr><td><code>isToday</code></td><td><code>boolean</code></td></tr>
+                  <tr><td><code>isSelected</code></td><td><code>boolean</code></td></tr>
+                  <tr><td><code>isDisabled</code></td><td><code>boolean</code></td></tr>
+                  <tr><td><code>isOutsideMonth</code></td><td><code>boolean</code></td></tr>
+                  <tr><td><code>weekDay</code></td><td><code>number</code></td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Navigation Methods</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.goToPrevMonth() / .goToNextMonth()</div>
+                <div class="docs-method__desc">Navigate to the previous or next month. Respects min/max bounds.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.goToPrevYear() / .goToNextYear()</div>
+                <div class="docs-method__desc">Navigate to the previous or next year.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.goToMonth(year, month)</div>
+                <div class="docs-method__desc">Navigate directly to a specific year and month.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.goToToday()</div>
+                <div class="docs-method__desc">Navigate to today's month.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.setViewMode(mode)</div>
+                <div class="docs-method__desc">Switch between <code>'day'</code>, <code>'month'</code>, and <code>'year'</code> views.</div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Selection Methods</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.selectDate(nepaliDate)</div>
+                <div class="docs-method__desc">Select a date. Fires <code>onChange</code> callback. Skips disabled dates.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.clearSelection()</div>
+                <div class="docs-method__desc">Clear the currently selected date.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.setValue(nepaliDate)</div>
+                <div class="docs-method__desc">Set the value programmatically. Does <strong>not</strong> fire <code>onChange</code>.</div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Subscriptions</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.subscribe(listener)</div>
+                <div class="docs-method__desc">Subscribe to state changes. The listener is called immediately with the current state, then on every subsequent change.</div>
+                <div class="docs-method__returns">Returns <code>Function</code> — unsubscribe callback</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.destroy()</div>
+                <div class="docs-method__desc">Remove all subscriptions and clean up.</div>
+              </div>
+            </div>
+
+            <!-- ── RangePicker ── -->
+            <div class="docs-section fade-in" id="range-picker">
+              <h2 class="docs-section__title">RangePicker</h2>
+              <p class="docs-section__desc">
+                Extends <code>CalendarEngine</code>. Adds two-phase range selection with hover preview.
+              </p>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Additional Options</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Option</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>startDate</code></td><td><code>NepaliDate</code></td><td>Initial range start</td></tr>
+                  <tr><td><code>endDate</code></td><td><code>NepaliDate</code></td><td>Initial range end</td></tr>
+                  <tr><td><code>minRange</code></td><td><code>number</code></td><td>Min days between start and end</td></tr>
+                  <tr><td><code>maxRange</code></td><td><code>number</code></td><td>Max days between start and end</td></tr>
+                  <tr><td><code>onRangeChange</code></td><td><code>Function</code></td><td>Called with <code>{ start, end }</code></td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Additional State Properties</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Property</th><th>Type</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>startDate</code></td><td><code>NepaliDate | null</code></td></tr>
+                  <tr><td><code>endDate</code></td><td><code>NepaliDate | null</code></td></tr>
+                  <tr><td><code>hoverDate</code></td><td><code>NepaliDate | null</code></td></tr>
+                  <tr><td><code>selectionPhase</code></td><td><code>'idle' | 'start-selected' | 'complete'</code></td></tr>
+                </tbody>
+              </table>
+
+              <p style="font-size: 14px; color: var(--text-secondary); margin: 16px 0;">Each <code>DayCell</code> also includes: <code>isRangeStart</code>, <code>isRangeEnd</code>, <code>isInRange</code>, <code>isRangeHover</code>.</p>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Methods</h3>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.selectDate(nepaliDate)</div>
+                <div class="docs-method__desc">First click = range start, second click = range end. Validates min/max range constraints.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.hoverDate(nepaliDate)</div>
+                <div class="docs-method__desc">Update the hover date for range preview (only active during <code>'start-selected'</code> phase).</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.setRange(start, end)</div>
+                <div class="docs-method__desc">Set the range programmatically. Fires <code>onRangeChange</code> if both dates are set.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.clearRange()</div>
+                <div class="docs-method__desc">Clear both start and end dates, reset to <code>'idle'</code> phase.</div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">.swapIfInverted()</div>
+                <div class="docs-method__desc">Ensures start &lt; end. Called automatically after range selection.</div>
+              </div>
+            </div>
+
+            <!-- ── Vanilla Adapter ── -->
+            <div class="docs-section fade-in" id="vanilla-adapter">
+              <h2 class="docs-section__title">Vanilla JS Adapter</h2>
+              <p class="docs-section__desc">
+                Renders the picker into a DOM container and wires events to the engine.
+              </p>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">createPicker(container, options = {})</div>
+                <div class="docs-method__desc">Mount a date picker into an <code>HTMLElement</code>. If the container is an <code>&lt;input&gt;</code>, the picker wraps it automatically.</div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Additional Options</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Option</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>range</code></td><td><code>boolean</code></td><td>Use RangePicker instead of CalendarEngine</td></tr>
+                  <tr><td><code>inputSelector</code></td><td><code>string</code></td><td>CSS selector for an input to sync value to</td></tr>
+                  <tr><td><code>format</code></td><td><code>string</code></td><td>Date format string (default: <code>'YYYY-MM-DD'</code>)</td></tr>
+                  <tr><td><code>syncInput</code></td><td><code>boolean</code></td><td>Auto-update the input value on selection</td></tr>
+                  <tr><td><code>openOnInit</code></td><td><code>boolean</code></td><td>Show the panel immediately (default: <code>false</code>)</td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Return Value</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>engine</code></td><td><code>CalendarEngine | RangePicker</code></td><td>Direct engine reference</td></tr>
+                  <tr><td><code>destroy()</code></td><td><code>Function</code></td><td>Unmount and clean up all listeners</td></tr>
+                  <tr><td><code>open()</code></td><td><code>Function</code></td><td>Show the picker panel</td></tr>
+                  <tr><td><code>close()</code></td><td><code>Function</code></td><td>Hide the picker panel</td></tr>
+                  <tr><td><code>getValue()</code></td><td><code>Function</code></td><td>Get selected date or range <code>{ start, end }</code></td></tr>
+                  <tr><td><code>setValue()</code></td><td><code>Function</code></td><td>Set value programmatically</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ── React ── -->
+            <div class="docs-section fade-in" id="react-adapter">
+              <h2 class="docs-section__title">React Adapter</h2>
+              <p class="docs-section__desc">Import from <code>nepali-datepicker/react</code>.</p>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">useNepaliDatePicker(options = {})</div>
+                <div class="docs-method__desc">Headless hook — wraps the CalendarEngine and returns reactive state + bound action handlers.</div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Return Value</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Property</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>state</code></td><td>Reactive <code>getState()</code> snapshot</td></tr>
+                  <tr><td><code>engine</code></td><td>Direct engine reference</td></tr>
+                  <tr><td><code>goToPrevMonth</code></td><td>Bound action</td></tr>
+                  <tr><td><code>goToNextMonth</code></td><td>Bound action</td></tr>
+                  <tr><td><code>goToPrevYear</code></td><td>Bound action</td></tr>
+                  <tr><td><code>goToNextYear</code></td><td>Bound action</td></tr>
+                  <tr><td><code>goToToday</code></td><td>Bound action</td></tr>
+                  <tr><td><code>setViewMode</code></td><td>Bound action</td></tr>
+                  <tr><td><code>selectDate</code></td><td>Bound action</td></tr>
+                  <tr><td><code>clearSelection</code></td><td>Bound action</td></tr>
+                  <tr><td><code>hoverDate</code></td><td>Bound action (range mode)</td></tr>
+                  <tr><td><code>setRange</code></td><td>Bound action (range mode)</td></tr>
+                  <tr><td><code>clearRange</code></td><td>Bound action (range mode)</td></tr>
+                </tbody>
+              </table>
+
+              <div class="docs-method" style="margin-top: 24px;">
+                <div class="docs-method__sig">&lt;NepaliDatePicker options={...} children={renderFn} /&gt;</div>
+                <div class="docs-method__desc">Render-prop component. Passes the same object as <code>useNepaliDatePicker</code> to the children render function.</div>
+              </div>
+            </div>
+
+            <!-- ── Vue ── -->
+            <div class="docs-section fade-in" id="vue-adapter">
+              <h2 class="docs-section__title">Vue 3 Adapter</h2>
+              <p class="docs-section__desc">Import from <code>nepali-datepicker/vue</code>.</p>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">useNepaliDatePicker(options = {})</div>
+                <div class="docs-method__desc">Vue 3 composable. Wraps CalendarEngine with reactive <code>ref</code> state. Returns the same interface as the React adapter.</div>
+                <div class="docs-method__returns">Returns <code>{ state: Ref, engine, ...actions }</code></div>
+              </div>
+            </div>
+
+            <!-- ── Svelte ── -->
+            <div class="docs-section fade-in" id="svelte-adapter">
+              <h2 class="docs-section__title">Svelte Adapter</h2>
+              <p class="docs-section__desc">Import from <code>nepali-datepicker/svelte</code>.</p>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">createNepaliPickerStore(options = {})</div>
+                <div class="docs-method__desc">Returns a Svelte-compatible readable store. Use <code>$store</code> syntax to access state reactively.</div>
+                <div class="docs-method__returns">Returns <code>{ subscribe, engine, ...actions }</code></div>
+              </div>
+            </div>
+
+            <!-- ── Locale ── -->
+            <div class="docs-section fade-in" id="locale">
+              <h2 class="docs-section__title">Locale &amp; Formatting</h2>
+              <p class="docs-section__desc">Two built-in locales: English (<code>'en'</code>) and Nepali Devanagari (<code>'np'</code>).</p>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">formatDate(nepaliDate, formatStr, locale = 'en')</div>
+                <div class="docs-method__desc">Format a NepaliDate to a string. Tokens: <code>YYYY</code>, <code>MM</code>, <code>DD</code>, <code>MMMM</code> (full month), <code>MMM</code> (short month), <code>dddd</code> (full weekday), <code>ddd</code> (short weekday).</div>
+                <div class="docs-method__returns">Returns <code>string</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">parseDate(str, formatStr, locale = 'en')</div>
+                <div class="docs-method__desc">Parse a formatted BS date string back into a NepaliDate. Supports both English and Nepali numerals.</div>
+                <div class="docs-method__returns">Returns <code>NepaliDate</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">LOCALES</div>
+                <div class="docs-method__desc">Object containing <code>en</code> and <code>np</code> locale data: <code>months</code>, <code>days</code>, <code>daysLong</code>, <code>today</code>, <code>clear</code>, <code>numberFormat(n)</code>.</div>
+              </div>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Nepali Month Names</h3>
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>#</th><th>English</th><th>Nepali</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Baisakh</td><td>बैशाख</td></tr>
+                  <tr><td>2</td><td>Jestha</td><td>जेठ</td></tr>
+                  <tr><td>3</td><td>Ashadh</td><td>असार</td></tr>
+                  <tr><td>4</td><td>Shrawan</td><td>श्रावण</td></tr>
+                  <tr><td>5</td><td>Bhadra</td><td>भाद्र</td></tr>
+                  <tr><td>6</td><td>Ashwin</td><td>आश्विन</td></tr>
+                  <tr><td>7</td><td>Kartik</td><td>कार्तिक</td></tr>
+                  <tr><td>8</td><td>Mangsir</td><td>मंसिर</td></tr>
+                  <tr><td>9</td><td>Poush</td><td>पुष</td></tr>
+                  <tr><td>10</td><td>Magh</td><td>माघ</td></tr>
+                  <tr><td>11</td><td>Falgun</td><td>फाल्गुण</td></tr>
+                  <tr><td>12</td><td>Chaitra</td><td>चैत्र</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ── Converter ── -->
+            <div class="docs-section fade-in" id="converter">
+              <h2 class="docs-section__title">Converter</h2>
+              <p class="docs-section__desc">
+                Bidirectional conversion between Bikram Sambat and Gregorian dates.
+                Epoch anchor: <code>1 Baisakh 2000 BS = April 14, 1943 AD</code>.
+              </p>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">adToBS(adYear, adMonth, adDay)</div>
+                <div class="docs-method__desc">Convert a Gregorian date to Bikram Sambat. Month is 1-indexed.</div>
+                <div class="docs-method__returns">Returns <code>{ year, month, day }</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">bsToAD(bsYear, bsMonth, bsDay)</div>
+                <div class="docs-method__desc">Convert a Bikram Sambat date to Gregorian. Month is 1-indexed.</div>
+                <div class="docs-method__returns">Returns <code>{ year, month, day }</code></div>
+              </div>
+
+              <div class="docs-method">
+                <div class="docs-method__sig">BS_CALENDAR_DATA</div>
+                <div class="docs-method__desc">The raw lookup table: <code>{ [bsYear]: number[12] }</code>. Each array contains the number of days in each month for that year. Range: 2000–2100 BS.</div>
+              </div>
+            </div>
+
+            <!-- ── Styling ── -->
+            <div class="docs-section fade-in" id="styling">
+              <h2 class="docs-section__title">Styling</h2>
+              <p class="docs-section__desc">
+                The optional Material stylesheet uses CSS custom properties for full theming control.
+                Import: <code>import 'nepali-datepicker/dist/material.css'</code>
+              </p>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">CSS Custom Properties</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>--ndp-primary</code></td><td><code>#1976D2</code></td><td>Primary accent color</td></tr>
+                  <tr><td><code>--ndp-primary-dark</code></td><td><code>#115293</code></td><td>Darker primary</td></tr>
+                  <tr><td><code>--ndp-primary-light</code></td><td><code>#E3F2FD</code></td><td>Light primary (range bg)</td></tr>
+                  <tr><td><code>--ndp-surface</code></td><td><code>#FFFFFF</code></td><td>Panel background</td></tr>
+                  <tr><td><code>--ndp-on-surface</code></td><td><code>#212121</code></td><td>Text on surface</td></tr>
+                  <tr><td><code>--ndp-on-surface-muted</code></td><td><code>#757575</code></td><td>Muted text</td></tr>
+                  <tr><td><code>--ndp-radius-md</code></td><td><code>8px</code></td><td>Panel border radius</td></tr>
+                  <tr><td><code>--ndp-cell-size</code></td><td><code>36px</code></td><td>Day cell size</td></tr>
+                  <tr><td><code>--ndp-width</code></td><td><code>280px</code></td><td>Panel width</td></tr>
+                  <tr><td><code>--ndp-font</code></td><td><code>'Roboto'</code></td><td>Font family</td></tr>
+                  <tr><td><code>--ndp-font-np</code></td><td><code>'Noto Sans Devanagari'</code></td><td>Nepali font</td></tr>
+                  <tr><td><code>--ndp-transition</code></td><td><code>150ms ease</code></td><td>Transition timing</td></tr>
+                </tbody>
+              </table>
+
+              <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--accent-purple);">Component Classes</h3>
+
+              <table class="docs-table glass-card">
+                <thead>
+                  <tr><th>Class</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>.ndp-container</code></td><td>Outer wrapper</td></tr>
+                  <tr><td><code>.ndp-panel</code></td><td>Floating calendar panel</td></tr>
+                  <tr><td><code>.ndp-header</code></td><td>Month/year navigation row</td></tr>
+                  <tr><td><code>.ndp-grid</code></td><td>7-column CSS grid for day cells</td></tr>
+                  <tr><td><code>.ndp-cell</code></td><td>Individual day cell</td></tr>
+                  <tr><td><code>.ndp-cell--today</code></td><td>Today's date indicator</td></tr>
+                  <tr><td><code>.ndp-cell--selected</code></td><td>Selected date (filled)</td></tr>
+                  <tr><td><code>.ndp-cell--disabled</code></td><td>Disabled cell</td></tr>
+                  <tr><td><code>.ndp-cell--range-start</code></td><td>Range start</td></tr>
+                  <tr><td><code>.ndp-cell--range-end</code></td><td>Range end</td></tr>
+                  <tr><td><code>.ndp-cell--in-range</code></td><td>Days within the selected range</td></tr>
+                  <tr><td><code>.ndp-footer</code></td><td>Bottom action bar</td></tr>
+                  <tr><td><code>.ndp-input</code></td><td>Input trigger styling</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="examples.html" class="footer__link">Examples</a>
+          <a href="docs.html" class="footer__link">API Docs</a>
+          <a href="https://www.npmjs.com/package/nepali-datepicker" target="_blank" class="footer__link">npm</a>
+          <a href="https://github.com" target="_blank" class="footer__link">GitHub</a>
+        </div>
+        <p class="footer__copy">Built with ❤️ for Nepal. Open source under MIT License.</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script>
+    // Sidebar scroll spy
+    const sections = document.querySelectorAll('.docs-section');
+    const sidebarLinks = document.querySelectorAll('.docs-sidebar__link');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sidebarLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.docs-sidebar__link[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>

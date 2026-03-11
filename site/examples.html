@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples — Nepali Datepicker</title>
+  <meta name="description" content="Interactive examples and use cases for Nepali Datepicker — basic picker, range selection, locale switching, date constraints, and more.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="lib/material.css">
+</head>
+<body>
+  <main class="main">
+
+    <section style="padding-top: 40px;">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Examples</span>
+          <h1 class="section-title">See it in action</h1>
+          <p class="section-desc">Interactive demos showcasing every feature of the library. Each example includes the code and a live preview.</p>
+        </div>
+
+        <!-- ═══ 1. Basic Date Picker ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">01</div>
+            <h2 class="example-header__title">Basic Date Picker</h2>
+            <p class="example-header__desc">The simplest setup — an inline calendar that fires <code>onChange</code> when a date is selected.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">import</span> { createPicker, NepaliDate }
+  <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker'</span>;
+<span class="tok-keyword">import</span> <span class="tok-string">'nepali-datepicker/dist/material.css'</span>;
+
+<span class="tok-keyword">const</span> picker = <span class="tok-function">createPicker</span>(
+  document.<span class="tok-function">getElementById</span>(<span class="tok-string">'picker'</span>),
+  {
+    locale: <span class="tok-string">'en'</span>,
+    openOnInit: <span class="tok-keyword">true</span>,
+    defaultDate: NepaliDate.<span class="tok-function">today</span>(),
+    onChange: (date) <span class="tok-operator">=></span> {
+      console.<span class="tok-function">log</span>(
+        date.<span class="tok-function">format</span>(<span class="tok-string">'YYYY MMMM DD'</span>)
+      );
+    },
+  }
+);</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo">
+              <div class="live-demo-wrapper">
+                <div id="demo-basic"></div>
+                <div id="demo-basic-out" class="api-output" style="margin-top: 12px; font-size: 12px;">Select a date</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 2. Nepali Locale ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">02</div>
+            <h2 class="example-header__title">Nepali (Devanagari) Locale</h2>
+            <p class="example-header__desc">Full Devanagari rendering — month names, day names, and numerals in Nepali script.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">const</span> picker = <span class="tok-function">createPicker</span>(el, {
+  <span class="tok-property">locale</span>: <span class="tok-string">'np'</span>,
+  <span class="tok-property">openOnInit</span>: <span class="tok-keyword">true</span>,
+  <span class="tok-property">defaultDate</span>: NepaliDate.<span class="tok-function">today</span>(),
+  <span class="tok-property">onChange</span>: (date) <span class="tok-operator">=></span> {
+    console.<span class="tok-function">log</span>(
+      date.<span class="tok-function">format</span>(<span class="tok-string">'MMMM DD, YYYY'</span>, <span class="tok-string">'np'</span>)
+    );
+    <span class="tok-comment">// → फाल्गुण २७, २०८२</span>
+  },
+});</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo">
+              <div class="live-demo-wrapper">
+                <div id="demo-nepali"></div>
+                <div id="demo-nepali-out" class="api-output" style="margin-top: 12px; font-size: 12px;">मिति छान्नुहोस्</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 3. Range Picker ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">03</div>
+            <h2 class="example-header__title">Date Range Picker</h2>
+            <p class="example-header__desc">Select a start and end date. Hover preview shows the range before committing.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">const</span> rangePicker = <span class="tok-function">createPicker</span>(el, {
+  <span class="tok-property">range</span>: <span class="tok-keyword">true</span>,
+  <span class="tok-property">locale</span>: <span class="tok-string">'en'</span>,
+  <span class="tok-property">openOnInit</span>: <span class="tok-keyword">true</span>,
+  <span class="tok-property">onRangeChange</span>: ({ start, end }) <span class="tok-operator">=></span> {
+    console.<span class="tok-function">log</span>(
+      <span class="tok-string">`${start.format()} → ${end.format()}`</span>
+    );
+    console.<span class="tok-function">log</span>(
+      <span class="tok-string">`Duration: ${start.diff(end)} days`</span>
+    );
+  },
+});</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo">
+              <div class="live-demo-wrapper">
+                <div id="demo-range"></div>
+                <div id="demo-range-out" class="api-output" style="margin-top: 12px; font-size: 12px;">Click to select start date</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 4. Min/Max Constraints ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">04</div>
+            <h2 class="example-header__title">Min/Max Date Constraints</h2>
+            <p class="example-header__desc">Restrict the selectable date range. Dates outside the bounds are automatically disabled.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">const</span> picker = <span class="tok-function">createPicker</span>(el, {
+  <span class="tok-property">locale</span>: <span class="tok-string">'en'</span>,
+  <span class="tok-property">openOnInit</span>: <span class="tok-keyword">true</span>,
+  <span class="tok-property">minDate</span>: NepaliDate.<span class="tok-function">parse</span>(<span class="tok-string">'2082-10-01'</span>),
+  <span class="tok-property">maxDate</span>: NepaliDate.<span class="tok-function">parse</span>(<span class="tok-string">'2082-12-30'</span>),
+  <span class="tok-property">defaultDate</span>: NepaliDate.<span class="tok-function">parse</span>(<span class="tok-string">'2082-11-15'</span>),
+  <span class="tok-property">onChange</span>: (date) <span class="tok-operator">=></span> {
+    console.<span class="tok-function">log</span>(date.<span class="tok-function">format</span>());
+  },
+});</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo">
+              <div class="live-demo-wrapper">
+                <div id="demo-minmax"></div>
+                <div id="demo-minmax-out" class="api-output" style="margin-top: 12px; font-size: 12px;">Only Poush–Chaitra 2082 selectable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 5. Disabled Days ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">05</div>
+            <h2 class="example-header__title">Disabled Days (Saturdays)</h2>
+            <p class="example-header__desc">Disable specific weekdays — here, all Saturdays are disabled to match Nepal's weekend.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">const</span> picker = <span class="tok-function">createPicker</span>(el, {
+  <span class="tok-property">locale</span>: <span class="tok-string">'en'</span>,
+  <span class="tok-property">openOnInit</span>: <span class="tok-keyword">true</span>,
+  <span class="tok-property">defaultDate</span>: NepaliDate.<span class="tok-function">today</span>(),
+  <span class="tok-property">disabledDays</span>: [<span class="tok-string">'Sat'</span>],
+  <span class="tok-property">onChange</span>: (date) <span class="tok-operator">=></span> {
+    console.<span class="tok-function">log</span>(date.<span class="tok-function">format</span>(<span class="tok-string">'dddd, MMMM DD'</span>));
+    <span class="tok-comment">// Saturdays can't be selected</span>
+  },
+});</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo">
+              <div class="live-demo-wrapper">
+                <div id="demo-disabled"></div>
+                <div id="demo-disabled-out" class="api-output" style="margin-top: 12px; font-size: 12px;">Saturdays are greyed out</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 6. Input Binding ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">06</div>
+            <h2 class="example-header__title">Input Field Binding</h2>
+            <p class="example-header__desc">Attach the picker to a text input — it opens on click/focus and auto-syncs the value.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">const</span> input = document
+  .<span class="tok-function">getElementById</span>(<span class="tok-string">'date-input'</span>);
+
+<span class="tok-keyword">const</span> picker = <span class="tok-function">createPicker</span>(input, {
+  <span class="tok-property">locale</span>: <span class="tok-string">'en'</span>,
+  <span class="tok-property">syncInput</span>: <span class="tok-keyword">true</span>,
+  <span class="tok-property">format</span>: <span class="tok-string">'YYYY-MM-DD'</span>,
+  <span class="tok-property">defaultDate</span>: NepaliDate.<span class="tok-function">today</span>(),
+  <span class="tok-property">onChange</span>: (date) <span class="tok-operator">=></span> {
+    console.<span class="tok-function">log</span>(<span class="tok-string">'Selected:'</span>, date.<span class="tok-function">format</span>());
+  },
+});</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo">
+              <div class="live-demo-wrapper">
+                <input type="text" id="demo-input-el" placeholder="Click to pick a date" readonly
+                  style="padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(148,163,184,0.15); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-mono); font-size: 14px; width: 260px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 7. Date Manipulation API ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">07</div>
+            <h2 class="example-header__title">Date Manipulation API</h2>
+            <p class="example-header__desc">Moment.js-inspired chainable API — arithmetic, comparison, and formatting on immutable <code>NepaliDate</code> objects.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">const</span> today = NepaliDate.<span class="tok-function">today</span>();
+
+<span class="tok-comment">// Arithmetic</span>
+today.<span class="tok-function">addDays</span>(<span class="tok-number">30</span>).<span class="tok-function">format</span>(<span class="tok-string">'MMMM DD, YYYY'</span>);
+today.<span class="tok-function">addMonths</span>(<span class="tok-number">3</span>).<span class="tok-function">startOf</span>(<span class="tok-string">'month'</span>).<span class="tok-function">format</span>();
+today.<span class="tok-function">subtractYears</span>(<span class="tok-number">1</span>).<span class="tok-function">endOf</span>(<span class="tok-string">'year'</span>).<span class="tok-function">format</span>();
+
+<span class="tok-comment">// Properties</span>
+today.daysInMonth;
+today.dayOfYear;
+today.weekOfYear;
+today.isWeekend();
+today.quarter;
+
+<span class="tok-comment">// Diff</span>
+<span class="tok-keyword">const</span> ny = NepaliDate.<span class="tok-function">parse</span>(<span class="tok-string">'2082-01-01'</span>);
+today.<span class="tok-function">diff</span>(ny, <span class="tok-string">'day'</span>);</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo example-card__demo--column">
+              <div id="demo-api-output" class="api-output" style="font-size: 12px; line-height: 2;">Loading...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 8. BS ↔ AD Conversion ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">08</div>
+            <h2 class="example-header__title">BS ↔ AD Conversion</h2>
+            <p class="example-header__desc">Convert dates between Bikram Sambat and Gregorian calendars in real-time.</p>
+          </div>
+          <div class="example-card">
+            <div class="example-card__code">
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                  <span class="code-block__lang">JavaScript</span>
+                </div>
+                <button class="code-block__copy">Copy</button>
+                <pre><code><span class="tok-keyword">import</span> { adToBS, bsToAD }
+  <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker'</span>;
+
+<span class="tok-comment">// AD → BS</span>
+<span class="tok-keyword">const</span> bs = <span class="tok-function">adToBS</span>(<span class="tok-number">2025</span>, <span class="tok-number">3</span>, <span class="tok-number">11</span>);
+<span class="tok-comment">// → { year: 2081, month: 11, day: 27 }</span>
+
+<span class="tok-comment">// BS → AD</span>
+<span class="tok-keyword">const</span> ad = <span class="tok-function">bsToAD</span>(<span class="tok-number">2082</span>, <span class="tok-number">1</span>, <span class="tok-number">1</span>);
+<span class="tok-comment">// → { year: 2025, month: 4, day: 14 }</span>
+
+<span class="tok-comment">// Via NepaliDate</span>
+NepaliDate.<span class="tok-function">fromAD</span>(<span class="tok-keyword">new</span> <span class="tok-class">Date</span>());
+NepaliDate.<span class="tok-function">today</span>().<span class="tok-function">toAD</span>();</code></pre>
+              </div>
+            </div>
+            <div class="example-card__demo example-card__demo--column">
+              <div class="converter-widget">
+                <div class="converter-widget__field">
+                  <label class="converter-widget__label">AD Date (YYYY-MM-DD)</label>
+                  <input type="text" id="conv-ad-input" class="converter-widget__input" placeholder="2025-03-11">
+                </div>
+                <div class="converter-widget__arrow">↕</div>
+                <div class="converter-widget__field">
+                  <label class="converter-widget__label">BS Date (YYYY-MM-DD)</label>
+                  <input type="text" id="conv-bs-input" class="converter-widget__input" placeholder="2081-11-27">
+                </div>
+                <div id="conv-result" class="converter-widget__result" style="font-size: 13px;">Enter a date above to convert</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 9. React / Vue / Svelte ═══ -->
+        <div class="example-section fade-in">
+          <div class="example-header">
+            <div class="example-header__num">09</div>
+            <h2 class="example-header__title">Framework Adapters</h2>
+            <p class="example-header__desc">First-class support for React, Vue 3, and Svelte. The headless engine works everywhere.</p>
+          </div>
+
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="react">React</button>
+            <button class="tab-btn" data-tab="vue">Vue 3</button>
+            <button class="tab-btn" data-tab="svelte">Svelte</button>
+          </div>
+
+          <!-- React -->
+          <div class="tab-panel active" id="tab-react">
+            <div class="code-block">
+              <div class="code-block__header">
+                <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                <span class="code-block__lang">React JSX</span>
+              </div>
+              <button class="code-block__copy">Copy</button>
+              <pre><code><span class="tok-keyword">import</span> { useNepaliDatePicker } <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker/react'</span>;
+
+<span class="tok-keyword">function</span> <span class="tok-function">MyPicker</span>() {
+  <span class="tok-keyword">const</span> {
+    state, selectDate,
+    goToPrevMonth, goToNextMonth
+  } = <span class="tok-function">useNepaliDatePicker</span>({ <span class="tok-property">locale</span>: <span class="tok-string">'en'</span> });
+
+  <span class="tok-keyword">return</span> (
+    <span class="tok-tag">&lt;div</span> <span class="tok-property">className</span>=<span class="tok-string">"my-calendar"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;button</span> <span class="tok-property">onClick</span>={goToPrevMonth}<span class="tok-tag">&gt;</span>‹<span class="tok-tag">&lt;/button&gt;</span>
+      <span class="tok-tag">&lt;span&gt;</span>
+        {state.viewYear} / {state.viewMonth}
+      <span class="tok-tag">&lt;/span&gt;</span>
+      <span class="tok-tag">&lt;button</span> <span class="tok-property">onClick</span>={goToNextMonth}<span class="tok-tag">&gt;</span>›<span class="tok-tag">&lt;/button&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-property">className</span>=<span class="tok-string">"grid"</span><span class="tok-tag">&gt;</span>
+        {state.weeks.<span class="tok-function">flat</span>().<span class="tok-function">map</span>((cell, i) <span class="tok-operator">=></span>
+          cell ? (
+            <span class="tok-tag">&lt;button</span>
+              <span class="tok-property">key</span>={i}
+              <span class="tok-property">onClick</span>={() <span class="tok-operator">=></span> <span class="tok-function">selectDate</span>(cell.date)}
+              <span class="tok-property">disabled</span>={cell.isDisabled}
+            <span class="tok-tag">&gt;</span>
+              {cell.label}
+            <span class="tok-tag">&lt;/button&gt;</span>
+          ) : <span class="tok-tag">&lt;span</span> <span class="tok-property">key</span>={i} <span class="tok-tag">/&gt;</span>
+        )}
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  );
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- Vue -->
+          <div class="tab-panel" id="tab-vue">
+            <div class="code-block">
+              <div class="code-block__header">
+                <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                <span class="code-block__lang">Vue 3 Setup</span>
+              </div>
+              <button class="code-block__copy">Copy</button>
+              <pre><code><span class="tok-tag">&lt;script setup&gt;</span>
+<span class="tok-keyword">import</span> { useNepaliDatePicker }
+  <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker/vue'</span>;
+
+<span class="tok-keyword">const</span> {
+  state, selectDate,
+  goToPrevMonth, goToNextMonth
+} = <span class="tok-function">useNepaliDatePicker</span>({
+  <span class="tok-property">locale</span>: <span class="tok-string">'np'</span>
+});
+<span class="tok-tag">&lt;/script&gt;</span>
+
+<span class="tok-tag">&lt;template&gt;</span>
+  <span class="tok-tag">&lt;div&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-property">@click</span>=<span class="tok-string">"goToPrevMonth"</span><span class="tok-tag">&gt;</span>‹<span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-tag">&lt;span&gt;</span>
+      {{ state.viewYear }} / {{ state.viewMonth }}
+    <span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-property">@click</span>=<span class="tok-string">"goToNextMonth"</span><span class="tok-tag">&gt;</span>›<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/template&gt;</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Svelte -->
+          <div class="tab-panel" id="tab-svelte">
+            <div class="code-block">
+              <div class="code-block__header">
+                <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                <span class="code-block__lang">Svelte</span>
+              </div>
+              <button class="code-block__copy">Copy</button>
+              <pre><code><span class="tok-tag">&lt;script&gt;</span>
+  <span class="tok-keyword">import</span> { createNepaliPickerStore }
+    <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker/svelte'</span>;
+
+  <span class="tok-keyword">const</span> picker = <span class="tok-function">createNepaliPickerStore</span>({
+    <span class="tok-property">locale</span>: <span class="tok-string">'en'</span>
+  });
+
+  <span class="tok-keyword">const</span> { state, selectDate } = picker;
+<span class="tok-tag">&lt;/script&gt;</span>
+
+{#<span class="tok-keyword">if</span> $state}
+  <span class="tok-tag">&lt;div&gt;</span>
+    {$state.viewYear} / {$state.viewMonth}
+    {#<span class="tok-keyword">each</span> $state.weeks.flat() <span class="tok-keyword">as</span> cell, i}
+      {#<span class="tok-keyword">if</span> cell}
+        <span class="tok-tag">&lt;button</span>
+          <span class="tok-property">on:click</span>={() <span class="tok-operator">=></span> selectDate(cell.date)}
+        <span class="tok-tag">&gt;</span>
+          {cell.label}
+        <span class="tok-tag">&lt;/button&gt;</span>
+      {/<span class="tok-keyword">if</span>}
+    {/<span class="tok-keyword">each</span>}
+  <span class="tok-tag">&lt;/div&gt;</span>
+{/<span class="tok-keyword">if</span>}</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="examples.html" class="footer__link">Examples</a>
+          <a href="docs.html" class="footer__link">API Docs</a>
+          <a href="https://www.npmjs.com/package/nepali-datepicker" target="_blank" class="footer__link">npm</a>
+          <a href="https://github.com" target="_blank" class="footer__link">GitHub</a>
+        </div>
+        <p class="footer__copy">Built with ❤️ for Nepal. Open source under MIT License.</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script type="module">
+    import { createPicker, NepaliDate, adToBS, bsToAD } from './lib/nepali-datepicker.esm.js';
+
+    // ── 1. Basic ──
+    createPicker(document.getElementById('demo-basic'), {
+      locale: 'en',
+      openOnInit: true,
+      defaultDate: NepaliDate.today(),
+      onChange: (date) => {
+        document.getElementById('demo-basic-out').textContent =
+          `Selected: ${date.format('MMMM DD, YYYY')}`;
+      },
+    });
+
+    // ── 2. Nepali ──
+    createPicker(document.getElementById('demo-nepali'), {
+      locale: 'np',
+      openOnInit: true,
+      defaultDate: NepaliDate.today(),
+      onChange: (date) => {
+        document.getElementById('demo-nepali-out').textContent =
+          `छानिएको: ${date.format('MMMM DD, YYYY', 'np')}`;
+      },
+    });
+
+    // ── 3. Range ──
+    createPicker(document.getElementById('demo-range'), {
+      range: true,
+      locale: 'en',
+      openOnInit: true,
+      defaultDate: NepaliDate.today(),
+      onRangeChange: ({ start, end }) => {
+        const diff = Math.abs(start.diff(end, 'day'));
+        document.getElementById('demo-range-out').textContent =
+          `${start.format()} → ${end.format()}  (${diff} days)`;
+      },
+    });
+
+    // ── 4. Min/Max ──
+    createPicker(document.getElementById('demo-minmax'), {
+      locale: 'en',
+      openOnInit: true,
+      minDate: NepaliDate.parse('2082-10-01'),
+      maxDate: NepaliDate.parse('2082-12-30'),
+      defaultDate: NepaliDate.parse('2082-11-15'),
+      onChange: (date) => {
+        document.getElementById('demo-minmax-out').textContent =
+          `Selected: ${date.format('MMMM DD, YYYY')}`;
+      },
+    });
+
+    // ── 5. Disabled Days ──
+    createPicker(document.getElementById('demo-disabled'), {
+      locale: 'en',
+      openOnInit: true,
+      defaultDate: NepaliDate.today(),
+      disabledDays: ['Sat'],
+      onChange: (date) => {
+        document.getElementById('demo-disabled-out').textContent =
+          `Selected: ${date.format('dddd, MMMM DD')}`;
+      },
+    });
+
+    // ── 6. Input Binding ──
+    createPicker(document.getElementById('demo-input-el'), {
+      locale: 'en',
+      syncInput: true,
+      format: 'YYYY-MM-DD',
+      defaultDate: NepaliDate.today(),
+    });
+
+    // ── 7. Date Manipulation API ──
+    {
+      const today = NepaliDate.today();
+      const lines = [
+        `today.format('YYYY-MM-DD')         → ${today.format('YYYY-MM-DD')}`,
+        `today.format('MMMM DD, YYYY','np') → ${today.format('MMMM DD, YYYY', 'np')}`,
+        ``,
+        `today.addDays(30).format()          → ${today.addDays(30).format()}`,
+        `today.addMonths(3).startOf('month') → ${today.addMonths(3).startOf('month').format()}`,
+        `today.subtractYears(1).endOf('year')→ ${today.subtractYears(1).endOf('year').format()}`,
+        ``,
+        `today.daysInMonth                   → ${today.daysInMonth}`,
+        `today.dayOfYear                     → ${today.dayOfYear}`,
+        `today.weekOfYear                    → ${today.weekOfYear}`,
+        `today.isWeekend()                   → ${today.isWeekend()}`,
+        `today.quarter                       → ${today.quarter}`,
+        ``,
+        `today.diff(parse('2082-01-01'))     → ${today.diff(NepaliDate.parse('2082-01-01'), 'day')} days`,
+      ];
+      document.getElementById('demo-api-output').textContent = lines.join('\n');
+    }
+
+    // ── 8. Converter ──
+    const convAd = document.getElementById('conv-ad-input');
+    const convBs = document.getElementById('conv-bs-input');
+    const convResult = document.getElementById('conv-result');
+
+    // Set defaults
+    const now = new Date();
+    convAd.value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    try {
+      const bs = adToBS(now.getFullYear(), now.getMonth()+1, now.getDate());
+      convBs.value = `${bs.year}-${String(bs.month).padStart(2,'0')}-${String(bs.day).padStart(2,'0')}`;
+      convResult.textContent = `AD ${convAd.value}  ⟷  BS ${convBs.value}`;
+    } catch(e) {}
+
+    convAd.addEventListener('input', () => {
+      try {
+        const parts = convAd.value.split('-').map(Number);
+        if (parts.length !== 3 || parts.some(isNaN)) return;
+        const bs = adToBS(parts[0], parts[1], parts[2]);
+        convBs.value = `${bs.year}-${String(bs.month).padStart(2,'0')}-${String(bs.day).padStart(2,'0')}`;
+        convResult.textContent = `AD ${convAd.value}  ⟷  BS ${convBs.value}`;
+      } catch(e) {
+        convResult.textContent = 'Invalid date or out of range';
+      }
+    });
+
+    convBs.addEventListener('input', () => {
+      try {
+        const parts = convBs.value.split('-').map(Number);
+        if (parts.length !== 3 || parts.some(isNaN)) return;
+        const ad = bsToAD(parts[0], parts[1], parts[2]);
+        convAd.value = `${ad.year}-${String(ad.month).padStart(2,'0')}-${String(ad.day).padStart(2,'0')}`;
+        convResult.textContent = `BS ${convBs.value}  ⟷  AD ${convAd.value}`;
+      } catch(e) {
+        convResult.textContent = 'Invalid date or out of range';
+      }
+    });
+
+    // ── Tabs ──
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

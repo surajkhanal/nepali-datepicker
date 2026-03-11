@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nepali Datepicker — Headless BS Date Picker Library</title>
+  <meta name="description" content="A headless, framework-agnostic Bikram Sambat (BS) date picker library with a rich date manipulation API, range selection, and optional Material Design styles.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="lib/material.css">
+</head>
+<body>
+  <main class="main">
+
+    <!-- ═══ Hero ═══ -->
+    <section class="hero">
+      <div class="container hero__content">
+        <div class="hero__badge fade-in">
+          <span class="hero__badge-dot"></span>
+          v1.0 — Now Available
+        </div>
+
+        <h1 class="hero__title fade-in fade-in-delay-1">
+          The Nepali<br>
+          <span class="hero__title-gradient">Date Picker</span>
+        </h1>
+
+        <p class="hero__subtitle fade-in fade-in-delay-2">
+          A headless, framework-agnostic Bikram Sambat date picker with a rich manipulation API,
+          range selection, and optional Material Design styles. BS 2000–2100.
+        </p>
+
+        <div class="hero__actions fade-in fade-in-delay-3">
+          <a href="examples.html" class="btn btn--primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            View Examples
+          </a>
+          <a href="docs.html" class="btn btn--ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            API Docs
+          </a>
+        </div>
+
+        <div class="hero__install fade-in fade-in-delay-4" style="margin-top: 32px;">
+          <span>$</span>
+          <code>npm install nepali-datepicker</code>
+          <button class="hero__install-copy" title="Copy" onclick="navigator.clipboard.writeText('npm install nepali-datepicker')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Features ═══ -->
+    <section id="features">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Features</span>
+          <h2 class="section-title">Everything you need for Nepali dates</h2>
+          <p class="section-desc">
+            A complete toolkit — from low-level date arithmetic to a beautiful, ready-to-use picker UI.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card fade-in fade-in-delay-1">
+            <div class="feature-card__icon">🧩</div>
+            <h3 class="feature-card__title">Headless Architecture</h3>
+            <p class="feature-card__desc">Pure state machine with zero DOM assumptions. Drop into React, Vue, Svelte, or Vanilla JS with zero friction.</p>
+          </div>
+          <div class="feature-card fade-in fade-in-delay-2">
+            <div class="feature-card__icon">📅</div>
+            <h3 class="feature-card__title">BS 2000–2100</h3>
+            <p class="feature-card__desc">Complete, accurate Bikram Sambat calendar data for 101 years, with bidirectional AD conversion.</p>
+          </div>
+          <div class="feature-card fade-in fade-in-delay-3">
+            <div class="feature-card__icon">🔒</div>
+            <h3 class="feature-card__title">Immutable API</h3>
+            <p class="feature-card__desc">Moment.js-inspired NepaliDate class with chainable arithmetic, comparison, and formatting — all immutable.</p>
+          </div>
+          <div class="feature-card fade-in fade-in-delay-1">
+            <div class="feature-card__icon">📆</div>
+            <h3 class="feature-card__title">Range Picker</h3>
+            <p class="feature-card__desc">Built-in range selection with hover preview, min/max range constraints, and dual-phase click flow.</p>
+          </div>
+          <div class="feature-card fade-in fade-in-delay-2">
+            <div class="feature-card__icon">🌐</div>
+            <h3 class="feature-card__title">Multi-Framework</h3>
+            <p class="feature-card__desc">First-class adapters for React hooks, Vue 3 composables, Svelte stores, and Vanilla JS — all tree-shakeable.</p>
+          </div>
+          <div class="feature-card fade-in fade-in-delay-3">
+            <div class="feature-card__icon">🎨</div>
+            <h3 class="feature-card__title">Material Design</h3>
+            <p class="feature-card__desc">Optional, beautiful Material-inspired stylesheet with CSS custom properties, ripples, and smooth animations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Live Demo ═══ -->
+    <section id="demo">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Live Demo</span>
+          <h2 class="section-title">Try it right here</h2>
+          <p class="section-desc">An interactive date picker powered by the library. Toggle between English and Nepali locale.</p>
+        </div>
+
+        <div class="demo-row fade-in">
+          <div class="demo-info">
+            <span class="demo-info__label">Interactive</span>
+            <h3 class="demo-info__title">Single Date Picker</h3>
+            <p class="demo-info__desc">
+              Click any date cell to select it. Navigate months and years using the arrow buttons.
+              The picker supports min/max date constraints, disabled days, and locale switching.
+            </p>
+            <div class="code-block">
+              <div class="code-block__header">
+                <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                <span class="code-block__lang">JavaScript</span>
+              </div>
+              <button class="code-block__copy">Copy</button>
+              <pre><code><span class="tok-keyword">import</span> { createPicker, NepaliDate } <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker'</span>;
+<span class="tok-keyword">import</span> <span class="tok-string">'nepali-datepicker/dist/material.css'</span>;
+
+<span class="tok-keyword">const</span> picker = <span class="tok-function">createPicker</span>(
+  document.<span class="tok-function">getElementById</span>(<span class="tok-string">'my-picker'</span>), {
+    locale: <span class="tok-string">'en'</span>,
+    defaultDate: NepaliDate.<span class="tok-function">today</span>(),
+    onChange: (date) <span class="tok-operator">=></span>
+      console.<span class="tok-function">log</span>(date.<span class="tok-function">format</span>(<span class="tok-string">'YYYY MMMM DD'</span>)),
+});</code></pre>
+            </div>
+          </div>
+          <div class="demo-panel">
+            <div class="live-demo-wrapper">
+              <div class="locale-toggle">
+                <span class="locale-toggle__label active" id="hero-locale-en">English</span>
+                <button class="locale-toggle__switch" id="hero-locale-toggle" aria-label="Toggle locale"></button>
+                <span class="locale-toggle__label" id="hero-locale-np">नेपाली</span>
+              </div>
+              <div id="hero-picker-mount"></div>
+              <div id="hero-picker-output" class="api-output" style="margin-top: 16px; min-height: 24px; font-size: 12px; color: var(--text-muted);">Click a date to see the selection</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Quick Start ═══ -->
+    <section id="quickstart">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Get Started</span>
+          <h2 class="section-title">Up and running in seconds</h2>
+        </div>
+
+        <div class="demo-row fade-in" style="max-width: 800px; margin: 0 auto;">
+          <div>
+            <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">1. Install</h3>
+            <div class="code-block" style="margin-bottom: 24px;">
+              <button class="code-block__copy">Copy</button>
+              <pre><code>npm install nepali-datepicker</code></pre>
+            </div>
+            <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">2. Import & Use</h3>
+            <div class="code-block">
+              <div class="code-block__header">
+                <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                <span class="code-block__lang">JavaScript</span>
+              </div>
+              <button class="code-block__copy">Copy</button>
+              <pre><code><span class="tok-keyword">import</span> { NepaliDate } <span class="tok-keyword">from</span> <span class="tok-string">'nepali-datepicker'</span>;
+
+<span class="tok-keyword">const</span> today = NepaliDate.<span class="tok-function">today</span>();
+console.<span class="tok-function">log</span>(today.<span class="tok-function">format</span>(<span class="tok-string">'MMMM DD, YYYY'</span>, <span class="tok-string">'np'</span>));
+<span class="tok-comment">// → फाल्गुण २७, २०८२</span>
+
+<span class="tok-keyword">const</span> next = today.<span class="tok-function">addMonths</span>(<span class="tok-number">3</span>).<span class="tok-function">startOf</span>(<span class="tok-string">'month'</span>);
+console.<span class="tok-function">log</span>(next.<span class="tok-function">format</span>()); <span class="tok-comment">// YYYY-MM-DD</span></code></pre>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">3. Core API</h3>
+            <div class="code-block">
+              <div class="code-block__header">
+                <div class="code-block__dots"><span class="code-block__dot"></span><span class="code-block__dot"></span><span class="code-block__dot"></span></div>
+                <span class="code-block__lang">JavaScript</span>
+              </div>
+              <button class="code-block__copy">Copy</button>
+              <pre><code><span class="tok-comment">// Arithmetic</span>
+date.<span class="tok-function">addDays</span>(<span class="tok-number">10</span>).<span class="tok-function">subtractMonths</span>(<span class="tok-number">1</span>);
+date.<span class="tok-function">startOf</span>(<span class="tok-string">'month'</span>);
+date.<span class="tok-function">endOf</span>(<span class="tok-string">'year'</span>);
+
+<span class="tok-comment">// Comparison</span>
+date.<span class="tok-function">isBefore</span>(other);
+date.<span class="tok-function">isBetween</span>(a, b, <span class="tok-string">'[]'</span>);
+date.<span class="tok-function">diff</span>(other, <span class="tok-string">'day'</span>);
+
+<span class="tok-comment">// Conversion</span>
+date.<span class="tok-function">toAD</span>();             <span class="tok-comment">// → JS Date</span>
+NepaliDate.<span class="tok-function">fromAD</span>(<span class="tok-keyword">new</span> <span class="tok-class">Date</span>());
+<span class="tok-function">adToBS</span>(<span class="tok-number">2025</span>, <span class="tok-number">3</span>, <span class="tok-number">11</span>);
+<span class="tok-function">bsToAD</span>(<span class="tok-number">2081</span>, <span class="tok-number">11</span>, <span class="tok-number">27</span>);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="examples.html" class="footer__link">Examples</a>
+          <a href="docs.html" class="footer__link">API Docs</a>
+          <a href="https://www.npmjs.com/package/nepali-datepicker" target="_blank" class="footer__link">npm</a>
+          <a href="https://github.com" target="_blank" class="footer__link">GitHub</a>
+        </div>
+        <p class="footer__copy">Built with ❤️ for Nepal. Open source under MIT License.</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script type="module">
+    import { createPicker, NepaliDate } from './lib/nepali-datepicker.esm.js';
+
+    let currentLocale = 'en';
+    let picker = null;
+
+    function initPicker(locale) {
+      const mount = document.getElementById('hero-picker-mount');
+      const output = document.getElementById('hero-picker-output');
+      mount.innerHTML = '';
+
+      const pickerEl = document.createElement('div');
+      mount.appendChild(pickerEl);
+
+      picker = createPicker(pickerEl, {
+        locale,
+        openOnInit: true,
+        defaultDate: NepaliDate.today(),
+        onChange: (date) => {
+          output.textContent = `Selected: ${date.format('MMMM DD, YYYY', locale)}  →  AD: ${date.toAD().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+        },
+      });
+    }
+
+    initPicker('en');
+
+    const toggle = document.getElementById('hero-locale-toggle');
+    const labelEn = document.getElementById('hero-locale-en');
+    const labelNp = document.getElementById('hero-locale-np');
+
+    toggle?.addEventListener('click', () => {
+      currentLocale = currentLocale === 'en' ? 'np' : 'en';
+      toggle.classList.toggle('on', currentLocale === 'np');
+      labelEn.classList.toggle('active', currentLocale === 'en');
+      labelNp.classList.toggle('active', currentLocale === 'np');
+      if (picker) picker.destroy();
+      initPicker(currentLocale);
+      document.getElementById('hero-picker-output').textContent = 'Click a date to see the selection';
+    });
+  </script>
+</body>
+</html>
