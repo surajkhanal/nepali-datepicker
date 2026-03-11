@@ -816,6 +816,12 @@ section {
   z-index: 100 !important;
 }
 
+@media (max-width: 900px) {
+  .example-card {
+    grid-template-columns: 1fr;
+  }
+}
+
 .example-card__code {
   border-right: 1px solid var(--border-subtle);
   overflow: hidden;
