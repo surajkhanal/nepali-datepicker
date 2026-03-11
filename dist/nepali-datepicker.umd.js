@@ -1281,7 +1281,7 @@
 
     let isOpen = Boolean(openOnInit);
     const open = () => {
-      if (isOpen) return;
+      if (isOpen && panel.style.display === 'block') return;
       isOpen = true;
       panel.style.display = 'block';
     };
@@ -1289,7 +1289,9 @@
     const close = () => {
       if (!isOpen) return;
       isOpen = false;
-      panel.style.display = 'none';
+      setTimeout(() => {
+        panel.style.display = 'none';
+      }, 0);
     };
 
     const triggerEl = inputEl || root;
@@ -1311,9 +1313,7 @@
     };
     document.addEventListener('click', onDocClick);
 
-    // Bug 1 fix: set initial visibility directly, bypassing the isOpen guard in close()
-    panel.style.display = 'none';
-    if (openOnInit) open();
+    panel.style.display = isOpen ? 'block' : 'none';
 
     return {
       engine,

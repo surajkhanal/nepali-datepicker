@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <div id="picker">hello</div>
+  <div id="picker"></div>
   <input type="text" id="my-picker" placeholder="Select a date" readonly />
 
   <script type="module">
@@ -19,8 +19,8 @@
       // inputSelector: '#my-picker',
       locale: 'np',
       syncInput: true,
-      openOnInit: true,
-      range: false,
+      openOnInit: false,
+      range: true,
       defaultDate: NepaliDate.today(),
       minDate: NepaliDate.parse('2080-01-01'),
       maxDate: NepaliDate.parse('2085-12-30'),
