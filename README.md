@@ -2,6 +2,8 @@
 
 Headless, framework-agnostic Nepali (BS) date picker with a rich manipulation API, range selection, and optional Material Design-inspired styles.
 
+**[🌐 Official Documentation & Live Demos](https://surajkhanal.github.io/nepali-datepicker)**
+
 ## Features
 
 - Bikram Sambat (BS) support for 2000–2100 with AD conversion
