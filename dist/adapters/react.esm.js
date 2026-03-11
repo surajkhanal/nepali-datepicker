@@ -960,6 +960,7 @@ class RangePicker extends CalendarEngine {
 
   hoverDate(nepaliDate) {
     if (this.selectionPhase !== 'start-selected') return;
+    if (this.hoveredDate && sameBsDate(this.hoveredDate, nepaliDate)) return;
     this.hoveredDate = nepaliDate;
     this._emit();
   }

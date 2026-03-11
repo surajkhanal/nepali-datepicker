@@ -958,6 +958,7 @@ class RangePicker extends CalendarEngine {
 
   hoverDate(nepaliDate) {
     if (this.selectionPhase !== 'start-selected') return;
+    if (this.hoveredDate && sameBsDate(this.hoveredDate, nepaliDate)) return;
     this.hoveredDate = nepaliDate;
     this._emit();
   }
@@ -1111,13 +1112,13 @@ function renderMonthGrid(state) {
   return `
     <div class="ndp-month-grid">
       ${state.months
-        .map((m) => {
-          const classes = ['ndp-cell', m.isCurrent ? 'ndp-cell--selected' : '']
-            .filter(Boolean)
-            .join(' ');
-          return `<button type="button" class="${classes}" data-action="select-month" data-month="${m.index}">${m.label}</button>`;
-        })
-        .join('')}
+      .map((m) => {
+        const classes = ['ndp-cell', m.isCurrent ? 'ndp-cell--selected' : '']
+          .filter(Boolean)
+          .join(' ');
+        return `<button type="button" class="${classes}" data-action="select-month" data-month="${m.index}">${m.label}</button>`;
+      })
+      .join('')}
     </div>
   `;
 }
@@ -1126,13 +1127,13 @@ function renderYearGrid(state) {
   return `
     <div class="ndp-year-grid">
       ${state.years
-        .map((y) => {
-          const classes = ['ndp-cell', y.isCurrent ? 'ndp-cell--selected' : '']
-            .filter(Boolean)
-            .join(' ');
-          return `<button type="button" class="${classes}" data-action="select-year" data-year="${y.year}">${y.year}</button>`;
-        })
-        .join('')}
+      .map((y) => {
+        const classes = ['ndp-cell', y.isCurrent ? 'ndp-cell--selected' : '']
+          .filter(Boolean)
+          .join(' ');
+        return `<button type="button" class="${classes}" data-action="select-year" data-year="${y.year}">${y.year}</button>`;
+      })
+      .join('')}
     </div>
   `;
 }
@@ -1152,23 +1153,42 @@ function createPicker(container, options = {}) {
     throw new Error('[NepaliDate] Container element is required');
   }
 
-  const { range = false, inputSelector, format = 'YYYY-MM-DD', ...engineOptions } = options;
+  const {
+    range = false,
+    inputSelector,
+    format = 'YYYY-MM-DD',
+    syncInput = false,
+    openOnInit = false,
+    ...engineOptions
+  } = options;
+
   const EngineClass = range ? RangePicker : CalendarEngine;
   const engine = new EngineClass(engineOptions);
   const weekStartsOn = Number.isInteger(options.weekStartsOn) ? options.weekStartsOn : 0;
   const panel = document.createElement('div');
   panel.className = 'ndp-panel';
 
-  container.classList.add('ndp-container');
-  container.appendChild(panel);
-
   let inputEl = null;
+  let root = container;
+  let wrapper = null;
+
+  if (container.tagName === 'INPUT' || container.tagName === 'TEXTAREA') {
+    inputEl = container;
+    inputEl.classList.add('ndp-input');
+    wrapper = document.createElement('div');
+    wrapper.className = 'ndp-container ndp-input-wrapper';
+    container.parentNode?.insertBefore(wrapper, container);
+    wrapper.appendChild(container);
+    root = wrapper;
+  } else {
+    root.classList.add('ndp-container');
+  }
+
+  root.appendChild(panel);
+
   if (inputSelector) {
     inputEl = document.querySelector(inputSelector);
-    if (inputEl) {
-      inputEl.classList.add('ndp-input');
-      inputEl.addEventListener('click', () => open());
-    }
+    if (inputEl) inputEl.classList.add('ndp-input');
   }
 
   const render = (state) => {
@@ -1177,12 +1197,12 @@ function createPicker(container, options = {}) {
       state.viewMode === 'day'
         ? renderDayGrid(state, weekStartsOn)
         : state.viewMode === 'month'
-        ? renderMonthGrid(state)
-        : renderYearGrid(state);
+          ? renderMonthGrid(state)
+          : renderYearGrid(state);
     const footer = renderFooter(state);
     panel.innerHTML = `${header}${body}${footer}`;
 
-    if (inputEl) {
+    if (syncInput && inputEl) {
       if (range) {
         const start = state.startDate;
         const end = state.endDate;
@@ -1196,7 +1216,8 @@ function createPicker(container, options = {}) {
   const unsubscribe = engine.subscribe(render);
 
   const onClick = (event) => {
-    const target = event.target.closest('[data-action]');
+    const path = event.composedPath();
+    const target = path.find(el => el instanceof HTMLElement && el.hasAttribute('data-action'));
     if (!target) return;
     const action = target.getAttribute('data-action');
     if (!action) return;
@@ -1220,6 +1241,11 @@ function createPicker(container, options = {}) {
       const d = Number(target.getAttribute('data-d'));
       const date = new NepaliDate(y, m, d);
       engine.selectDate(date);
+      if (range) {
+        if (engine.selectionPhase === 'complete') close();
+      } else {
+        close();
+      }
     }
     if (action === 'select-month') {
       const month = Number(target.getAttribute('data-month'));
@@ -1244,25 +1270,60 @@ function createPicker(container, options = {}) {
     engine.hoverDate(date);
   };
 
-  container.addEventListener('click', onClick);
-  container.addEventListener('mouseover', onHover);
+  root.addEventListener('click', onClick);
+  root.addEventListener('mouseover', onHover);
 
+  let isOpen = Boolean(openOnInit);
   const open = () => {
+    if (isOpen) return;
+    isOpen = true;
     panel.style.display = 'block';
   };
 
   const close = () => {
+    if (!isOpen) return;
+    isOpen = false;
     panel.style.display = 'none';
   };
+
+  const triggerEl = inputEl || root;
+  const onTriggerClick = (event) => {
+    if (event.target.closest('.ndp-panel')) return;
+    open();
+  };
+  const onTriggerFocus = () => open();
+
+  triggerEl.addEventListener('click', onTriggerClick);
+  triggerEl.addEventListener('focusin', onTriggerFocus);
+
+  const onDocClick = (event) => {
+    const path = event.composedPath();
+    if (path.includes(panel)) return;
+    if (inputEl && path.includes(inputEl)) return;
+    if (!inputEl && path.includes(root)) return;
+    close();
+  };
+  document.addEventListener('click', onDocClick);
+
+  // Bug 1 fix: set initial visibility directly, bypassing the isOpen guard in close()
+  panel.style.display = 'none';
+  if (openOnInit) open();
 
   return {
     engine,
     destroy() {
       unsubscribe();
       engine.destroy();
-      container.removeEventListener('click', onClick);
-      container.removeEventListener('mouseover', onHover);
+      root.removeEventListener('click', onClick);
+      root.removeEventListener('mouseover', onHover);
+      triggerEl.removeEventListener('click', onTriggerClick);
+      triggerEl.removeEventListener('focusin', onTriggerFocus);
+      document.removeEventListener('click', onDocClick);
       if (panel.parentNode) panel.parentNode.removeChild(panel);
+      if (wrapper && inputEl && wrapper.parentNode) {
+        wrapper.parentNode.insertBefore(inputEl, wrapper);
+        wrapper.parentNode.removeChild(wrapper);
+      }
     },
     open,
     close,

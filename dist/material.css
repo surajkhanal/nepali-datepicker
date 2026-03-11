@@ -158,26 +158,20 @@
   color: var(--ndp-on-surface-muted);
 }
 
-.ndp-cell--range-start,
-.ndp-cell--range-end {
-  background: var(--ndp-primary);
-  color: white;
-}
-
-.ndp-cell--range-start {
-  border-top-left-radius: var(--ndp-radius-full);
-  border-bottom-left-radius: var(--ndp-radius-full);
-}
-
-.ndp-cell--range-end {
-  border-top-right-radius: var(--ndp-radius-full);
-  border-bottom-right-radius: var(--ndp-radius-full);
-}
-
 .ndp-cell--in-range {
   background: var(--ndp-primary-light);
   color: var(--ndp-on-surface);
   border-radius: 0;
+}
+
+/* Range endpoints must override in-range styles when both classes are present */
+.ndp-cell--range-start,
+.ndp-cell--range-end,
+.ndp-cell--range-start.ndp-cell--in-range,
+.ndp-cell--range-end.ndp-cell--in-range {
+  background: var(--ndp-primary) !important;
+  color: white !important;
+  border-radius: var(--ndp-radius-full) !important;
 }
 
 .ndp-cell--hover {
@@ -220,11 +214,25 @@
 }
 
 @keyframes ndp-slide-in-left {
-  from { transform: translateX(-8px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(-8px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes ndp-slide-in-right {
-  from { transform: translateX(8px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(8px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
