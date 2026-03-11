@@ -69,6 +69,13 @@
   overflow: hidden;
 }
 
+.ndp-header__nav-btn svg,
+.ndp-header__title svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .ndp-header__nav-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <link rel="stylesheet" href="./dist/material.css" />
+</head>
+<body>
+  <div id="picker">hello</div>
+  <input type="text" id="my-picker" placeholder="Select a date" readonly />
+
+  <script type="module">
+    import { createPicker, NepaliDate } from './dist/nepali-datepicker.esm.js';
+
+    const picker = createPicker(document.getElementById('picker'), {
+        inputSelector: '#my-picker',
+        locale: 'np',
+        defaultDate: NepaliDate.today(),
+        minDate: NepaliDate.parse('2080-01-01'),
+        maxDate: NepaliDate.parse('2085-12-30'),
+        onChange: (date) => console.log(date.format('YYYY MM DD', 'en')),
+    });
+  </script>
+</body>
+</html>
