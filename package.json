@@ -1,6 +1,20 @@
 {
-  "name": "nepali-datepicker",
+  "name": "@codersuraz/nepali-datepicker",
   "version": "1.0.0",
+  "description": "Headless, framework-agnostic Nepali (BS) date picker with a rich manipulation API and framework adapters.",
+  "author": "codersuraz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codersuraz/nepali-datepicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codersuraz/nepali-datepicker/issues"
+  },
+  "homepage": "https://github.com/codersuraz/nepali-datepicker#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/nepali-datepicker.cjs.js",
   "module": "./dist/nepali-datepicker.esm.js",
@@ -9,14 +23,32 @@
       "import": "./dist/nepali-datepicker.esm.js",
       "require": "./dist/nepali-datepicker.cjs.js"
     },
-    "./react": { "import": "./dist/adapters/react.esm.js" },
-    "./vue": { "import": "./dist/adapters/vue.esm.js" },
-    "./svelte": { "import": "./dist/adapters/svelte.esm.js" },
+    "./react": {
+      "import": "./dist/adapters/react.esm.js"
+    },
+    "./vue": {
+      "import": "./dist/adapters/vue.esm.js"
+    },
+    "./svelte": {
+      "import": "./dist/adapters/svelte.esm.js"
+    },
     "./dist/material.css": "./dist/material.css"
   },
-  "sideEffects": ["./dist/material.css"],
-  "files": ["dist"],
-  "keywords": ["nepali", "bikram-sambat", "BS", "datepicker", "headless", "calendar", "nepal"],
+  "sideEffects": [
+    "./dist/material.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "nepali",
+    "bikram-sambat",
+    "BS",
+    "datepicker",
+    "headless",
+    "calendar",
+    "nepal"
+  ],
   "devDependencies": {
     "rollup": "^4",
     "vitest": "^1"

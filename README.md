@@ -1,4 +1,4 @@
-﻿# nepali-datepicker
+# @codersuraz/nepali-datepicker
 
 Headless, framework-agnostic Nepali (BS) date picker with a rich manipulation API, range selection, and optional Material Design-inspired styles.
 
@@ -13,7 +13,7 @@ Headless, framework-agnostic Nepali (BS) date picker with a rich manipulation AP
 ## Install
 
 ```bash
-npm install nepali-datepicker
+npm install @codersuraz/nepali-datepicker
 ```
 
 ## Usage
@@ -21,8 +21,8 @@ npm install nepali-datepicker
 ### Vanilla
 
 ```js
-import { createPicker, NepaliDate } from 'nepali-datepicker';
-import 'nepali-datepicker/dist/material.css';
+import { createPicker, NepaliDate } from '@codersuraz/nepali-datepicker';
+import '@codersuraz/nepali-datepicker/dist/material.css';
 
 const picker = createPicker(document.getElementById('my-picker'), {
   locale: 'np',
@@ -51,7 +51,7 @@ const rangePicker = createPicker(container, {
 ### React
 
 ```jsx
-import { useNepaliDatePicker } from 'nepali-datepicker/react';
+import { useNepaliDatePicker } from '@codersuraz/nepali-datepicker/react';
 
 function MyPicker() {
   const { state, selectDate, goToPrevMonth, goToNextMonth } =
@@ -84,7 +84,7 @@ function MyPicker() {
 ### Vue 3
 
 ```js
-import { useNepaliDatePicker } from 'nepali-datepicker/vue';
+import { useNepaliDatePicker } from '@codersuraz/nepali-datepicker/vue';
 
 const { state, selectDate } = useNepaliDatePicker({ locale: 'np' });
 ```
@@ -92,7 +92,7 @@ const { state, selectDate } = useNepaliDatePicker({ locale: 'np' });
 ### Svelte
 
 ```js
-import { createNepaliPickerStore } from 'nepali-datepicker/svelte';
+import { createNepaliPickerStore } from '@codersuraz/nepali-datepicker/svelte';
 
 const picker = createNepaliPickerStore({ locale: 'en' });
 ```
@@ -147,7 +147,7 @@ Extends `CalendarEngine` with:
 Optional Material stylesheet:
 
 ```js
-import 'nepali-datepicker/dist/material.css';
+import '@codersuraz/nepali-datepicker/dist/material.css';
 ```
 
 ## Data Source
@@ -160,3 +160,4 @@ BS calendar data is derived from Government of Nepal calendar publications (via 
 npm run build
 npm test
 ```
+
